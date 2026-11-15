@@ -142,6 +142,11 @@ Each requirement ends with acceptance criteria. Format rules come from the scrip
 - A character the font lacks is named before it is lost. A very long speech is never cut.
 - Acceptance: `checks/export-check.cjs`, `export-verify.py`, `export-verify-docx.py` and `export-edge.cjs` pass with no problems.
 
+### Script files
+**R24. Save, open and close scripts** (D-046)
+- A script can be saved to a `.openact` file, opened again, and closed; New, Open and Close ask first only when changes are in no file. The download has double-click installers for Windows, Mac and Linux.
+- Acceptance: `checks/files-check.cjs` passes with no problems; the installers are run on each system before an announcement (Windows and Mac not yet).
+
 ### Video games
 **R23. Video game writing** (D-044)
 - A Video game format with nodes, player choices, conditions, jumps, barks, quest beats and lore; a Branches tab that maps the nodes and checks the joins; recording line IDs that can be locked.

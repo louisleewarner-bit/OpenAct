@@ -14,7 +14,7 @@ const axeSrc = fs.readFileSync(process.env.SP + '/axe/node_modules/axe-core/axe.
   for (const [fmt, targets] of [['Pantomime', ['Bruntwood Prize for Playwriting', 'UK new-writing theatre']], ['TV comedy (single camera)', ['Austin Film Festival Script Competition', 'Academy Nicholl Fellowships']]]) {
     await page.keyboard.press('Escape');
     await page.getByRole('button', { name: 'More' }).click();
-    await page.getByRole('menuitem', { name: /Start a script/ }).click();
+    await page.getByRole('menuitem', { name: /Start a script/ }).click(); await require('./lib.cjs').discardIfAsked(page);
     await page.waitForTimeout(200);
     await page.getByRole('dialog').locator('section').getByRole('button', { name: new RegExp('^' + fmt.replace(/[()]/g, '\\$&')) }).click();
     await page.waitForTimeout(300);

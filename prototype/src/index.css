@@ -1042,3 +1042,7 @@ a.btn { text-decoration: none; }
 .b-issues li { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; padding: 6px 8px; border-radius: var(--r-1); background: var(--desk); font-size: 13px; border-left: 3px solid var(--rule); }
 .b-issues li.fix { background: var(--tint-salmon); color: var(--warn-ink); border-left-color: var(--warn-ink); }
 .b-issues li .btn { height: 28px; flex: none; }
+
+/* ---------- script files (D-046) ---------- */
+.statusbar .file-note { color: var(--ink-soft); max-width: 30ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 700px) { .statusbar .file-note { display: none; } }

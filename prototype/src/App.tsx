@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { ClipboardCheck, Download, Keyboard, ListTree, Monitor, Moon, MoreHorizontal, PanelLeft, PanelRight, Plus, Sun, Users } from 'lucide-react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { ClipboardCheck, Download, Keyboard, ListTree, Monitor, Moon, MoreHorizontal, PanelLeft, PanelRight, Plus, Sun, Users, X } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { PageEditor } from './cue/editor';
@@ -8,12 +8,14 @@ import type { PaperId, ProfileId } from './cue/model';
 import { customFormats, idOf, type CustomFormat } from './cue/custom';
 import { baseId, GROUPS, PAPERS, PROFILE_ORDER, PROFILES } from './cue/profiles';
 import { FormatFileDialog, FormatFinderDialog, ImportFormatDialog, YourFormats } from './formats';
-import { AboutDialog, ExportDialog, NoteDialog, PasteDialog, ShortcutsDialog, SongDialog, TitleDialog, WelcomeDialog } from './dialogs';
+import { AboutDialog, ExportDialog, LeaveDialog, NoticeDialog, NoteDialog, PasteDialog, ShortcutsDialog, SongDialog, TitleDialog, WelcomeDialog } from './dialogs';
 import { Details, ElementBar, Outline, StatusBar } from './panels';
 import { ReviewPanel } from './review';
 import { isMac, shortcutIndex } from './cue/flow';
 import { Mark } from './logo';
-import { makeTemplate } from './cue/samples';
+import { makeSample, makeTemplate } from './cue/samples';
+import { canPickFile, fileNameFor, parseScriptFile, saveToPicked, ScriptFileError, toScriptFile, writeTo, MAX_SCRIPT_BYTES } from './cue/scriptfile';
+import { inHostedPreview, saveFile } from './cue/save';
 import { firstRun, store, useStoreVersion } from './state';
 
 type Theme = 'system' | 'light' | 'dark';
@@ -232,6 +234,96 @@ export default function App() {
   }, [phone]);
 
   const say = (m: string) => setMessage(m + (message.endsWith('​') ? '' : '​'));
+
+  // ---- script files (D-046): save, open, close ----
+  const fileInput = useRef<HTMLInputElement>(null);
+  const [leave, setLeave] = useState<{ intent: 'close' | 'new' | 'open'; then: () => void } | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const hasContent = () => store.script.elements.some((e) => e.text.trim()) || !!store.script.title.title.trim();
+  const needsSave = () => {
+    store.commit(); // text typed a moment ago counts
+    return store.fileDirty && hasContent();
+  };
+  const guarded = (intent: 'close' | 'new' | 'open', then: () => void) => (needsSave() ? setLeave({ intent, then }) : then());
+  const saveScript = async (asCopy = false): Promise<boolean> => {
+    store.commit(); // take in text typed a moment ago, so it counts as saved
+    const text = toScriptFile(store.script);
+    const name = fileNameFor(store.script);
+    try {
+      if (!asCopy && store.fileHandle) {
+        try {
+          await writeTo(store.fileHandle as Parameters<typeof writeTo>[0], text);
+          store.markFileSaved(store.fileName ?? name);
+          say(`Saved ${store.fileName}`);
+          return true;
+        } catch {
+          store.fileHandle = null; // the file moved or permission lapsed: ask again
+        }
+      }
+      if (canPickFile() && !inHostedPreview()) {
+        const h = await saveToPicked(name, text);
+        if (!h) return false;
+        store.markFileSaved(h.name, h);
+        say(`Saved ${h.name}`);
+        return true;
+      }
+      const out = await saveFile(inHostedPreview() ? name.replace(/\.openact$/, '.openact.json') : name, new Blob([text], { type: 'application/json' }));
+      if (!out.ok) {
+        if (out.reason !== 'declined') setNotice(out.message);
+        return false;
+      }
+      store.markFileSaved(out.name);
+      say(`Saved ${out.name}`);
+      return true;
+    } catch {
+      setNotice('The file couldn’t be saved. Try “Save a copy…”, or export a copy instead.');
+      return false;
+    }
+  };
+  const openScriptFile = async (file: File) => {
+    if (file.size > MAX_SCRIPT_BYTES) return setNotice('This file is too large to be a script (over 20 MB).');
+    const text = await file.text();
+    try {
+      const script = parseScriptFile(text);
+      store.load(script, { name: file.name });
+      setWelcome(false);
+      focusFirst();
+      say(`Opened ${file.name}`);
+    } catch (e) {
+      // Plain text (Fountain or a copy from elsewhere) goes through the paste preview instead.
+      if (/\.(fountain|txt|md)$/i.test(file.name)) setPasteText(text);
+      else setNotice(e instanceof ScriptFileError ? e.message : 'This file couldn’t be read as a script.');
+    }
+  };
+  const askOpen = () => guarded('open', () => fileInput.current?.click());
+  const askNew = () => guarded('new', () => setWelcome(true));
+  const closeScript = () =>
+    guarded('close', () => {
+      store.load(makeSample('blank-screen', store.script.paper));
+      setWelcome(true);
+      say('Script closed');
+    });
+  const keys = useRef({ save: () => {}, open: () => {} });
+  keys.current = { save: () => void saveScript(), open: askOpen };
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!(isMac ? e.metaKey : e.ctrlKey) || e.altKey || e.shiftKey) return;
+      const k = e.key.toLowerCase();
+      if ((k !== 's' && k !== 'o') || document.querySelector('[role="dialog"]')) return;
+      e.preventDefault();
+      (k === 's' ? keys.current.save : keys.current.open)();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+  // The browser's own "leave this page?" prompt, while changes are in no file.
+  useEffect(() => {
+    window.onbeforeunload = (e) => {
+      if (!needsSave()) return;
+      e.preventDefault();
+      e.returnValue = '';
+    };
+  });
   const jump = (id: string) => {
     setOutlineOpen(false);
     setRightSheet(false);
@@ -306,6 +398,20 @@ export default function App() {
     <div className="app" style={cols}>
       <header className="topbar">
         <h1 className="sr-only">OpenAct: {title}</h1>
+        <input
+          ref={fileInput}
+          type="file"
+          id="open-script-file"
+          className="sr-only"
+          tabIndex={-1}
+          aria-label="Open a script file"
+          accept=".openact,.json,.fountain,.txt,application/json,text/plain"
+          onChange={(e) => {
+            const f = e.target.files?.[0];
+            e.target.value = '';
+            if (f) void openScriptFile(f);
+          }}
+        />
         <p id="editor-help" className="sr-only">
           Each paragraph is one script element. Enter starts the next element and Tab changes the element type. Press Escape, then Tab, to leave the script.
         </p>
@@ -325,9 +431,14 @@ export default function App() {
           {title}
         </button>
         <span className="topbar-spacer" />
-        <button type="button" className="btn" onClick={() => setWelcome(true)} aria-label="New script">
+        <button type="button" className="btn" onClick={askNew} aria-label="New script">
           <Plus size={16} aria-hidden /> <span aria-hidden>New</span>
         </button>
+        {!phone && (
+          <button type="button" className="btn btn-quiet" onClick={closeScript} title="Close this script and go back to the start">
+            <X size={16} aria-hidden /> Close
+          </button>
+        )}
         {!phone && (
           <div className="tool-group">
             <FormatControls />
@@ -340,7 +451,16 @@ export default function App() {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem onSelect={() => setWelcome(true)}>Start a script…</DropdownMenuItem>
+            <DropdownMenuItem onSelect={askNew}>Start a script…</DropdownMenuItem>
+            <DropdownMenuItem onSelect={askOpen}>
+              Open a script file…<DropdownMenuShortcut>{isMac ? '⌘O' : 'Ctrl+O'}</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => void saveScript()}>
+              Save to a file<DropdownMenuShortcut>{isMac ? '⌘S' : 'Ctrl+S'}</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => void saveScript(true)}>Save a copy…</DropdownMenuItem>
+            <DropdownMenuItem onSelect={closeScript}>Close this script</DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem onSelect={() => setPasteText('')}>Paste a script…</DropdownMenuItem>
             <DropdownMenuItem onSelect={() => { setEditingFormat(null); setImportOpen(true); }}>Import a format file…</DropdownMenuItem>
             <DropdownMenuItem onSelect={() => setFinderOpen(true)}>Find a format…</DropdownMenuItem>
@@ -428,7 +548,7 @@ export default function App() {
             <ClipboardCheck size={20} aria-hidden />
             Review
           </button>
-          <button type="button" onClick={() => setWelcome(true)}>
+          <button type="button" onClick={askNew}>
             <Plus size={20} aria-hidden />
             New
           </button>
@@ -485,6 +605,23 @@ export default function App() {
       <FormatFinderDialog open={finderOpen} onOpenChange={setFinderOpen} onUse={startWith} onImport={() => { setEditingFormat(null); setImportOpen(true); }} />
       <FormatFileDialog format={fileFormat} onClose={() => setFileFormat(null)} />
       <ExportDialog open={exportOpen} onOpenChange={setExportOpen} />
+      <LeaveDialog
+        intent={leave?.intent ?? null}
+        onCancel={() => setLeave(null)}
+        onDiscard={() => {
+          const go = leave?.then;
+          setLeave(null);
+          go?.();
+        }}
+        onSave={async () => {
+          const go = leave?.then;
+          if (await saveScript()) {
+            setLeave(null);
+            go?.();
+          }
+        }}
+      />
+      <NoticeDialog message={notice} onClose={() => setNotice(null)} />
       <PasteDialog text={pasteText} onClose={() => setPasteText(null)} onInsert={(rows) => editorRef.current?.insertAtEnd(rows)} />
       <TitleDialog open={titleOpen} onOpenChange={setTitleOpen} />
       <NoteDialog id={noteId} onClose={() => setNoteId(null)} />

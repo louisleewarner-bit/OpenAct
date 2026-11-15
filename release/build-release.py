@@ -21,6 +21,27 @@ for f in ('OFL-Atkinson-Hyperlegible-Next.txt', 'OFL-Courier-Prime.txt'): shutil
 shutil.copy(PROTO / 'LICENSE', PKG / 'LICENSE')
 subprocess.run(['node', str(KIT / 'release' / 'notices.cjs'), str(PKG / 'THIRD-PARTY-NOTICES.txt')], check=True)
 
+
+# ---- double-click installers (D-046) ----
+INST = KIT / 'release' / 'installers'
+(PKG / 'installer').mkdir(exist_ok=True)
+from PIL import Image
+icon512 = Image.open(KIT / 'brand' / 'icon-512.png').convert('RGBA')
+shutil.copy(KIT / 'brand' / 'icon-512.png', PKG / 'installer' / 'icon-512.png')
+icon512.save(PKG / 'installer' / 'OpenAct.ico', sizes=[(16, 16), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
+def put(src, dst, crlf=False, exe=False):
+    data = (INST / src).read_text()
+    if crlf: data = data.replace('\r\n', '\n').replace('\n', '\r\n')
+    d = PKG / dst; d.write_text(data, newline='')
+    if exe: d.chmod(0o755)
+put('windows/Install-OpenAct.cmd', 'Install OpenAct (Windows).cmd', crlf=True)
+put('windows/Uninstall-OpenAct.cmd', 'installer/Uninstall OpenAct.cmd', crlf=True)
+put('windows/make-shortcuts.ps1', 'installer/make-shortcuts.ps1', crlf=True)
+put('mac/Install-OpenAct.command', 'Install OpenAct (Mac).command', exe=True)
+put('mac/Uninstall-OpenAct.command', 'installer/Uninstall OpenAct.command', exe=True)
+put('linux/Install-OpenAct.sh', 'Install OpenAct (Linux).sh', exe=True)
+put('linux/uninstall-openact.sh', 'installer/uninstall-openact.sh', exe=True)
+
 # ---- plain-language documents ----
 (PKG / 'README.txt').write_text(f'''OpenAct {VERSION} (public preview)
 The free script editor for stage and screen.
@@ -35,13 +56,25 @@ WHAT IT DOES
 - "Ready to submit?" checks a script against where it is going, and shows the source for each rule.
 - Works offline. No account. Nothing is sent anywhere.
 
-TWO WAYS TO USE IT
-1. Open OpenAct.html (double-click it). It runs in your browser, with no connection.
-2. Install it as an app. Put the "app" folder on any web host, or run a small server in it ("python3 -m http.server 8080", then open
-   http://localhost:8080 in Chrome or Edge), and choose Install in the address bar. On a phone: Add to Home Screen.
+INSTALL IT (easiest)
+Unzip the download first (right-click the zip and choose Extract All, or double-click it on a Mac), then double-click the install file for your computer:
+- Windows: "Install OpenAct (Windows).cmd". It adds OpenAct to your Desktop and Start menu. If Windows says it "protected your PC", choose More info, then Run anyway:
+  the installer is not signed, because signing costs money. It is a plain text file you can open in Notepad and read first.
+- Mac: "Install OpenAct (Mac).command". The first time, hold Control, click the file, choose Open, then Open again. It puts OpenAct.app in your Applications folder
+  (inside your home folder).
+- Linux: "Install OpenAct (Linux).sh" (right-click, Run, or in a terminal: bash "Install OpenAct (Linux).sh"). It adds OpenAct to your applications menu.
+None of them needs a password or sends anything anywhere. Each leaves an uninstaller (see the end of the install window).
+OpenAct opens in its own window, using Chrome, Edge, Brave or Chromium if you have one. Otherwise it opens in your default browser.
+
+OR JUST OPEN IT
+Double-click OpenAct.html. It runs in your browser, with no connection. (The "app" folder is for putting OpenAct on a web site, where it can be installed from the address bar.)
+
+SAVING AND OPENING
+OpenAct keeps your script in this computer's browser storage as you write. For a copy you can move, back up or send, use More, then Save to a file (Ctrl+S, or Command+S):
+it makes a .openact file. More, then Open a script file (Ctrl+O) opens one again, and Close this script asks before it lets go of one you have not saved.
 
 WHERE YOUR SCRIPTS ARE
-In your browser's storage, on your device. They go nowhere unless you export them. Clearing site data, using a private window, or opening OpenAct
+In the app window's or browser's storage on your device, and in any .openact files you save. They go nowhere unless you export them. Clearing site data, using a private window, or opening OpenAct
 in a different browser, profile or place starts empty, and OpenAct.html and the installed app each keep their own scripts. Export a PDF or a
 Fountain file (plain text) now and then. This preview has no sync and no automatic backup.
 

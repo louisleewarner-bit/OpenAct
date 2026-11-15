@@ -9,3 +9,11 @@ exports.openReview = async (page) => {
   await page.getByRole('button', { name: 'Side panel' }).click();
   await page.getByRole('tab', { name: 'Review' }).click();
 };
+
+// New, Open and Close ask "Save first?" when a script has changes no file holds (D-046). Checks that start a fresh script
+// after typing say "continue without saving".
+exports.discardIfAsked = async (page) => {
+  const btn = page.locator('#leave-discard');
+  await page.waitForTimeout(250);
+  if (await btn.isVisible().catch(() => false)) { await btn.click(); await page.waitForTimeout(300); }
+};

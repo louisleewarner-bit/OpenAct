@@ -16,7 +16,7 @@ async function session(host) {
   await p.goto(url); await p.waitForTimeout(900);
   return { b, p };
 }
-const start = async (p, re) => { if (!(await p.getByRole('heading', { name: 'Start a script' }).count())) await p.getByRole('button', { name: 'New script' }).click(); await p.getByRole('dialog').getByRole('button', { name: re }).click(); await p.waitForTimeout(500); await p.keyboard.press('Escape'); await p.waitForTimeout(150); };
+const start = async (p, re) => { if (!(await p.getByRole('heading', { name: 'Start a script' }).count())) await p.getByRole('button', { name: 'New script' }).click(); await require('./lib.cjs').discardIfAsked(p); await p.getByRole('dialog').getByRole('button', { name: re }).click(); await p.waitForTimeout(500); await p.keyboard.press('Escape'); await p.waitForTimeout(150); };
 async function exportAs(p, fmt, name, opts = {}) {
   await p.getByRole('button', { name: 'Export', exact: true }).click(); await p.getByRole('heading', { name: 'Export' }).waitFor();
   await p.locator(`#fmt-${fmt}`).check();

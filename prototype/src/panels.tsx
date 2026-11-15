@@ -393,6 +393,9 @@ export function StatusBar() {
           Page {page} of {pages}
         </span>
         {prof.runtime && <span>About {minutes} min</span>}
+        <span className="file-note" title="OpenAct also keeps this script in this browser as you write">
+          {store.fileName ? (store.fileDirty ? `Changed since saved to ${store.fileName}` : `Saved to ${store.fileName}`) : 'Not saved to a file'}
+        </span>
         <span>
           {store.saveState === 'saved' && <span className="saved-dot" aria-hidden />}
           {saved}

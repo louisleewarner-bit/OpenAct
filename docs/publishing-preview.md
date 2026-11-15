@@ -33,4 +33,4 @@ The site in `release/out/site/` is static and loads nothing from other sites, so
 Suggested wording: "OpenAct is a free, open-source script editor for stage and screen, now in public preview. It keeps your scripts on your device. Real PDF and Word export, 16 formats including video game scripts. Tested in Chrome; not yet tried in Word, Final Draft, Safari or Firefox, so please report problems."
 
 ## Known limits to repeat in the release
-Real Word, Final Draft, Safari, Firefox and phone keyboards have not been tried. Final Draft indent units are unverified. Importing Ink and Yarn files is not built. The name is not cleared until step 1 is done.
+The install files are unsigned (Windows and macOS will warn once), and the Windows installer has not been run on a real PC: run it on one before announcing. Real Word, Final Draft, Safari, Firefox and phone keyboards have not been tried. Final Draft indent units are unverified. Importing Ink and Yarn files is not built. The name is not cleared until step 1 is done.

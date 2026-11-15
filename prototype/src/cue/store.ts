@@ -26,6 +26,11 @@ export class Store {
   private history: string[] = [];
   private hIndex = -1;
   private saveTimer = 0;
+  /** The file this script was last saved to or opened from (D-046), and whether it has changed since. */
+  fileName: string | null = null;
+  fileHandle: unknown = null;
+  fileDirty = false;
+  fileSavedAt = 0;
 
   constructor(script: Script) {
     this.script = script;
@@ -200,11 +205,24 @@ export class Store {
     els.splice(at < 0 ? els.length : at, 0, ...block);
     this.change();
   }
-  load(script: Script) {
+  load(script: Script, file?: { name: string; handle?: unknown }) {
     this.script = script;
+    this.fileName = file?.name ?? null;
+    this.fileHandle = file?.handle ?? null;
+    this.fileSavedAt = file ? Date.now() : 0;
     this.resetHistory();
     this.markUnsaved(); // a script just started or opened is kept, even before the first edit
     this.change();
+    this.fileDirty = false;
+    this.emitUi();
+  }
+  /** The script was just written to a file. */
+  markFileSaved(name: string, handle?: unknown) {
+    this.fileName = name;
+    if (handle !== undefined) this.fileHandle = handle;
+    this.fileDirty = false;
+    this.fileSavedAt = Date.now();
+    this.emitUi();
   }
 
   // ---- cursor and highlight (chrome only) ----
@@ -260,6 +278,7 @@ export class Store {
     return true;
   }
   private markUnsaved() {
+    this.fileDirty = true;
     if (this.saveState !== 'unavailable') this.saveState = 'unsaved';
     window.clearTimeout(this.saveTimer);
     this.saveTimer = window.setTimeout(() => this.save(), 600);

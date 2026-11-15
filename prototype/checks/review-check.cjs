@@ -75,7 +75,7 @@ const summary = (page) => page.evaluate(() => ({
   const names = ['Screenplay','TV drama (one hour)','TV comedy (single camera)','TV sitcom (multi-camera)','UK studio sitcom','Vertical micro-drama','Stage play (UK)','Stage play (US)','Musical (UK)','Musical (US)','Pantomime','Radio drama (UK)','Audio drama and podcast','Comic or graphic novel','Treatment or outline'];
   for (const f of names) {
     await page.getByRole('button', { name: 'More' }).click();
-    await page.getByRole('menuitem', { name: /Start a script/ }).click();
+    await page.getByRole('menuitem', { name: /Start a script/ }).click(); await require('./lib.cjs').discardIfAsked(page);
     await page.waitForTimeout(200);
     await page.getByRole('dialog').locator('section').getByRole('button', { name: new RegExp('^' + f.replace(/[()]/g, '\\$&')) }).click();
     await page.waitForTimeout(400);

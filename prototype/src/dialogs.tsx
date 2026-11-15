@@ -590,6 +590,53 @@ export function ShortcutsDialog({ open, onOpenChange }: OpenProps) {
   );
 }
 
+export function NoticeDialog({ message, onClose }: { message: string | null; onClose: () => void }) {
+  return (
+    <Dialog open={message !== null} onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-w-[440px]">
+        <DialogHeader>
+          <DialogTitle>Couldn’t open that file</DialogTitle>
+          <DialogDescription id="notice-text">{message}</DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <button type="button" className="btn btn-primary" onClick={onClose}>
+            OK
+          </button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/** Asked before a script is closed or replaced while it has changes that no file holds (D-046). */
+export function LeaveDialog({ intent, onSave, onDiscard, onCancel }: { intent: 'close' | 'new' | 'open' | null; onSave: () => void; onDiscard: () => void; onCancel: () => void }) {
+  const what = intent === 'open' ? 'open another script' : intent === 'new' ? 'start a new script' : 'close this script';
+  const name = store.script.title.title.trim() || 'Untitled';
+  return (
+    <Dialog open={intent !== null} onOpenChange={(o) => !o && onCancel()}>
+      <DialogContent className="max-w-[460px]">
+        <DialogHeader>
+          <DialogTitle>Save “{name}” first?</DialogTitle>
+          <DialogDescription>
+            You’re about to {what}. {store.fileName ? `You’ve changed “${store.fileName}” since you last saved it.` : 'This script isn’t saved in a file yet.'} OpenAct keeps one script in this browser, so once you {intent === 'close' ? 'close it' : 'move on'} a saved file is the only way back to it.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter style={{ flexWrap: 'wrap' }}>
+          <button type="button" className="btn btn-quiet" onClick={onCancel} id="leave-cancel">
+            Keep writing
+          </button>
+          <button type="button" className="btn" onClick={onDiscard} id="leave-discard">
+            {intent === 'close' ? 'Close without saving' : 'Continue without saving'}
+          </button>
+          <button type="button" className="btn btn-primary" onClick={onSave} id="leave-save">
+            Save a file, then {intent === 'close' ? 'close' : 'continue'}
+          </button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function AboutDialog({ open, onOpenChange }: OpenProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -610,7 +657,7 @@ export function AboutDialog({ open, onOpenChange }: OpenProps) {
           <section aria-labelledby="about-install">
             <h3 id="about-install">Install OpenAct</h3>
             <p>
-              <strong>On a computer:</strong> choose Install in your browser’s address bar or menu.
+              <strong>On a computer:</strong> download OpenAct and double-click the install file for your computer (Windows, Mac or Linux). Or, when OpenAct is on a web site, choose Install in your browser’s address bar or menu.
             </p>
             <p>
               <strong>On a phone or tablet:</strong> open the browser’s Share or menu button and choose Add to Home Screen.
@@ -620,7 +667,7 @@ export function AboutDialog({ open, onOpenChange }: OpenProps) {
           </section>
           <section aria-labelledby="about-yours">
             <h3 id="about-yours">Your scripts stay with you</h3>
-            <p>Scripts are saved on this device and go nowhere unless you export them. Keep backups: OpenAct reminds you.</p>
+            <p>Scripts are kept on this device as you write, and go nowhere unless you export them. For a copy you can back up or move, use More, then Save to a file; More, then Open a script file brings it back.</p>
           </section>
           <section aria-labelledby="about-legal">
             <h3 id="about-legal">The small print</h3>
