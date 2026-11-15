@@ -1,0 +1,23 @@
+# Creates the "public preview" release when a tag like v1.0-preview is pushed.
+# The package, its checksum and the release notes are read from the gh-pages branch, where the website keeps them.
+name: Release preview
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+      - name: Check the download against its checksum
+        run: sha256sum -c OpenAct-preview-1.0.zip.sha256
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" OpenAct-preview-1.0.zip OpenAct-preview-1.0.zip.sha256 \
+            --repo "$GITHUB_REPOSITORY" --prerelease --title "OpenAct 1.0 (public preview)" --notes-file RELEASE-NOTES.txt
