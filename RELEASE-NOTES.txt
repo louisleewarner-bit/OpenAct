@@ -1,0 +1,19 @@
+OpenAct 1.0 (public preview)
+
+New in this release
+- The logo: the spike mark, with a new app icon, favicon and social card.
+- Real exports: PDF, Word, Fountain and Final Draft. Word can keep the PDF's page breaks. The font is embedded in PDF and Word files.
+- Video game scripts: nodes, player choices, conditions, barks, quest beats and lore, a branch map that checks every jump, lockable recording line IDs, and export to a recording sheet (CSV), Ink and Yarn Spinner.
+- Import your own formats (Final Draft, Word, or an OpenAct format file) and "Find a format".
+- A calmer look, a phone layout with an element bar that is always there, and a New button on every screen.
+- Free for everyone, under the GNU General Public License.
+
+Fixed on the way
+- A speech longer than two pages lost its text after page 2 in exports. It now splits across as many pages as it needs.
+- PDFs fell back to a different font when built a certain way. The font is now embedded and checked.
+- Starting a new script did not save until you typed. It saves at once.
+- A double-spaced speech beside a speaker sat half a line too low on screen.
+
+How exports were checked
+Every line of every format's PDF sits within 0.04 inch of where the page shows it. Word files that keep the PDF's page breaks match the PDF page for
+page when rendered in LibreOffice. Word and Final Draft themselves have not been tried.
