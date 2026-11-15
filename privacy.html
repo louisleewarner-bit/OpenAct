@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OpenAct: the free script editor for stage and screen</title>
+<meta name="description" content="Write screenplays, TV, stage plays, musicals, pantomime, audio drama, comics and video game scripts in the right format. Free, no account, and your scripts stay on your device.">
+<meta property="og:title" content="OpenAct: the free script editor for stage and screen">
+<meta property="og:description" content="Sixteen formats, real PDF and Word export, offline, no account. Free.">
+<meta property="og:image" content="img/social-card.png">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F5F7F9" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#181D27" media="(prefers-color-scheme: dark)">
+<style>
+@font-face { font-family: "Atkinson Hyperlegible Next"; font-weight: 200 800; font-display: swap; src: url(fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2) format("woff2-variations"); }
+@font-face { font-family: "Courier Prime"; font-weight: 400; font-display: swap; src: url(fonts/courier-prime-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Courier Prime"; font-weight: 700; font-display: swap; src: url(fonts/courier-prime-latin-700-normal.woff2) format("woff2"); }
+</style>
+<style>
+:root {
+  --desk: #E8EBF0; --panel: #F5F7F9; --paper: #FFFFFF; --ink: #1C2433; --ink-soft: #566074; --pencil: #6A7387; --rule: #D5DAE2;
+  --accent: #2D4DA6; --accent-ink: #FFFFFF; --tint-blue: #D7E6FA; --tint-gold: #F6E2A6; --mark-hi: #2D4DA6; --mark-lo: #223C86;
+  --shade: 28 36 51;
+  --e1: 0 1px 1px rgb(var(--shade) / .06), 0 1px 2px rgb(var(--shade) / .08);
+  --page: 0 0 0 1px rgb(var(--shade) / .06), 0 1px 2px rgb(var(--shade) / .08), 0 4px 10px rgb(var(--shade) / .06), 0 18px 40px rgb(var(--shade) / .12);
+  --r1: 4px; --r2: 8px;
+  --font-ui: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-script: "Courier Prime", "Courier New", Courier, monospace;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --desk: #12161E; --panel: #181D27; --paper: #1D2330; --ink: #E3E6EC; --ink-soft: #A2AABA; --pencil: #8E97AA; --rule: #2C3444;
+  --accent: #9DB2FF; --accent-ink: #10162A; --tint-blue: #22324D; --tint-gold: #43391C; --mark-hi: #9DB2FF; --mark-lo: #6F88E6; --shade: 0 0 0;
+  --e1: 0 1px 2px rgb(0 0 0 / .35), inset 0 1px 0 rgb(255 255 255 / .05);
+  --page: 0 0 0 1px rgb(255 255 255 / .05), 0 4px 10px rgb(0 0 0 / .30), 0 18px 40px rgb(0 0 0 / .40); color-scheme: dark; } }
+* { box-sizing: border-box; }
+html { scroll-padding-top: 16px; }
+body { margin: 0; background: var(--desk); color: var(--ink); font: 17px/1.6 var(--font-ui); -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--paper); padding: 8px 12px; border-radius: var(--r1); z-index: 5; }
+.skip:focus { left: 8px; }
+.wrap { width: min(1040px, 100% - 32px); margin-inline: auto; }
+header.top { background: var(--panel); border-bottom: 1px solid var(--rule); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.brand { display: inline-flex; align-items: baseline; gap: .3em; font: 700 22px/1 var(--font-script); letter-spacing: -.03em; color: var(--ink); text-decoration: none; }
+.mark { width: .64em; height: .64em; flex: none; } .mark-v { fill: var(--mark-lo); } .mark-h { fill: var(--mark-hi); }
+nav a { margin-left: 18px; color: var(--ink-soft); text-decoration: none; font-size: 15px; } nav a:hover { color: var(--ink); text-decoration: underline; }
+.hero { padding-block: clamp(36px, 7vw, 84px) clamp(28px, 5vw, 56px); display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.3fr); gap: clamp(24px, 5vw, 56px); align-items: center; }
+h1 { font-size: clamp(32px, 5vw, 50px); line-height: 1.1; margin: 0 0 16px; letter-spacing: -.01em; text-wrap: balance; }
+.lede { font-size: clamp(18px, 2.2vw, 21px); color: var(--ink-soft); margin: 0 0 24px; max-width: 34ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: var(--r1); font: 600 17px var(--font-ui); text-decoration: none; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); box-shadow: var(--e1); }
+.btn:hover { border-color: var(--pencil); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); box-shadow: var(--e1), inset 0 1px 0 rgb(255 255 255 / .22); }
+.fine { font-size: 14px; color: var(--ink-soft); margin: 14px 0 0; }
+.shot { margin: 0; position: relative; }
+.shot img { display: block; width: 100%; height: auto; border-radius: var(--r2); box-shadow: var(--page); background: var(--paper); }
+.shot .phone { position: absolute; right: -2%; bottom: -8%; width: 30%; border-radius: 14px; }
+section.block { padding-block: clamp(28px, 5vw, 56px); border-top: 1px solid var(--rule); }
+h2 { font-size: clamp(24px, 3.2vw, 32px); line-height: 1.2; margin: 0 0 20px; text-wrap: balance; }
+h3 { font-size: 18px; margin: 0 0 4px; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 32px; }
+.grid p, .two p, .steps p { margin: 0; color: var(--ink-soft); font-size: 16px; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 40px; }
+ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 10px; }
+.chip { display: inline-block; font-size: 13px; font-weight: 600; padding: 1px 8px; border-radius: var(--r1); background: var(--tint-gold); color: var(--ink); vertical-align: 1px; }
+.note { background: var(--paper); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: var(--r1); padding: 14px 18px; box-shadow: var(--e1); max-width: 70ch; }
+.note p { margin: 0; color: var(--ink); font-size: 16px; }
+footer { border-top: 1px solid var(--rule); background: var(--panel); padding-block: 28px 40px; font-size: 14.5px; color: var(--ink-soft); }
+footer .wrap { display: grid; gap: 10px; } footer p { margin: 0; max-width: 80ch; }
+code, kbd { font-family: var(--font-script); font-size: .92em; background: var(--paper); border: 1px solid var(--rule); border-radius: var(--r1); padding: 0 5px; }
+@media (max-width: 820px) { .hero { grid-template-columns: minmax(0, 1fr); } .grid { grid-template-columns: minmax(0, 1fr); } .two { grid-template-columns: minmax(0, 1fr); } .shot .phone { right: 2%; } nav a:not(.keep) { display: none; } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the page</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="OpenAct, home"><svg class="mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><polygon class="mark-v" points="0,7 27,0 27,68 0,68"/><polygon class="mark-h" points="0,72 100,72 94,100 0,100"/></svg>OpenAct</a>
+    <nav aria-label="Main"><a href="#formats">Formats</a><a href="#install">Install</a><a href="#yours">Your scripts</a><a class="keep" href="#free">Free</a></nav>
+  </div>
+</header>
+<main id="main"><div class="wrap" style="padding-block:48px"><h1>Privacy</h1><div style="display:grid;gap:14px;max-width:68ch"><p>OpenAct collects nothing. It has no account, analytics, advertising, cookies or tracking, and it sends no information to anyone.</p><p>What is stored, and where: your scripts, your settings (theme, panel sizes), and any formats you import are kept in your browser&#x27;s local storage on your
+own device. The installed app also keeps a copy of itself so that it works offline. Nothing else is kept, and none of it leaves your device unless you
+export a file and share it yourself.</p><p>Links: &quot;Find a format&quot; and the About screen contain links to other organisations&#x27; own pages. They open in your browser only when you choose them, and
+those sites have their own privacy practices.</p><p>Your files: when you import a template, the file is read on your device and is not uploaded.</p><p>If someone else hosts OpenAct for you (for example a school or a company), their web server may keep ordinary logs such as your address and the time of
+a visit. That is the host&#x27;s practice, not OpenAct&#x27;s, and they should have their own notice.</p><p>Questions and problems: use the issue tracker on the project&#x27;s repository page.</p><p>To remove everything OpenAct has stored, clear this site&#x27;s data in your browser&#x27;s settings, or uninstall the app.</p></div><p style="margin-top:24px"><a href="./">Back to OpenAct</a></p></div></main></body></html>
