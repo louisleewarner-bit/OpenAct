@@ -1,0 +1,96 @@
+Title: Jack and the Beanstalk
+Credit: A pantomime by
+Author: An OpenAct sample script
+Draft date: Rehearsal draft
+
+> ACT ONE <
+
+.SCENE 1: THE VILLAGE OF LITTLE MOO
+[[openact: full stage]]
+
+A sunny village green: bunting, a well, and a sign reading LITTLE MOO, TWINNED WITH NOWHERE IN PARTICULAR. The VILLAGERS are mid-dance.
+
+!SONG 1: MORNING IN LITTLE MOO (VILLAGERS)
+[[openact: song | singers: VILLAGERS | function: Opening number: the village, and its money troubles | staging: Full company; DAISY the cow makes a late, hopeful entrance | feel: Bright and brassy]]
+
+.SCENE 2: A LANE OUTSIDE THE VILLAGE
+[[openact: front cloth]]
+
+Tabs in. SILLY BILLY bounds on, waving at everyone.
+
+SILLY BILLY
+Hiya, boys and girls!
+
+The audience reply.
+
+SILLY BILLY
+Oh, that was rubbish. My nan shouts louder than that, and she lives in Spain. When I say "Hiya, boys and girls", you shout "Hiya, Billy!" Ready? Hiya, boys and girls!
+
+The audience shout back, louder.
+
+SILLY BILLY
+That's more like it. Now, Mum's sent me to market to sell Daisy the cow. But Daisy's my best friend. So I've got a plan.
+(Leaning in)
+I'm going to sell her very, very slowly.
+
+DAME TROTT sweeps on in a dress made entirely of tea towels.
+
+DAME TROTT
+Billy! Have you sold that cow yet?
+
+SILLY BILLY
+Not yet, Mum. I've been making friends.
+
+DAME TROTT
+(To the audience)
+Ooh, look at you all. Hello, darlings! I'm Dame Trott. I'd shake your hands, but I've just done my nails, and the varnish cost more than the cow.
+[[Local gag option: swap the varnish line for the price of parking in town.]]
+
+FLESHCREEP slides on behind them, rubbing his hands. The audience boo.
+
+DAME TROTT
+What's all that booing? Is it the dress?
+
+SILLY BILLY
+I think there's someone behind us, Mum.
+
+DAME TROTT
+Behind us? Don't be daft.
+(To the audience)
+Is there someone behind us?
+
+The audience shout "He's behind you!" They turn one way; FLESHCREEP ducks the other. They try again, faster. And again.
+
+FLESHCREEP
+(Aside)
+Enjoy your little lane, peasants. By tonight the Giant will own every cow, every crumb and every tea towel in this village.
+
+DAME TROTT
+Did somebody say tea towels?
+
+FLESHCREEP exits with a swirl of his cloak, to boos.
+
+!SONG 2: SELL HER SLOWLY (SILLY BILLY, DAME TROTT)
+[[openact: song | singers: SILLY BILLY, DAME TROTT | function: Comic duet: Billy's plan to keep Daisy | staging: Front cloth; DAISY joins for the last chorus | feel: Music-hall patter song]]
+
+~We'll sell her slowly, sell her slow,
+~Down the lane and round we go,
+~And if a buyer comes our way,
+~We'll take the long way home today!
+
+They exit, with DAISY trotting after. Tabs out.
+
+.SCENE 3: THE MARKET SQUARE
+[[openact: full stage]]
+
+Stalls, striped awnings and a bustling crowd. FAIRY MOONBEAM enters stage right, as good fairies always do.
+
+FAIRY MOONBEAM
+In every tale, however tall, the smallest bean can save us all.
+
+.SCENE 4: THE GIANT'S KITCHEN
+[[openact: full stage]]
+
+A table the size of a bus. A spoon the size of a canoe. FLESHCREEP polishes an enormous fork.
+
+/* openact {"v":1,"profile":"panto","paper":"a4","cast":[{"name":"DAME TROTT","description":"Jack's mother. Runs the dairy, and the village."},{"name":"JACK","description":"Our hero. A dreamer with no head for money."},{"name":"SILLY BILLY","description":"Jack's brother and the audience's best friend."},{"name":"FLESHCREEP","description":"The Giant's henchman. Boo him."},{"name":"FAIRY MOONBEAM","description":"The good fairy. Speaks in rhyme."}],"dismissed":[]} */

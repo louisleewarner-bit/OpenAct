@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img"><title>OpenAct</title><defs>
+<linearGradient id="tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2E3A55"/><stop offset=".55" stop-color="#1C2433"/><stop offset="1" stop-color="#121826"/></linearGradient>
+<linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".09"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+<linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E4E9F3"/></linearGradient>
+<linearGradient id="tapeH" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B7BEA"/><stop offset="1" stop-color="#2D4DA6"/></linearGradient>
+<linearGradient id="tapeV" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4A68CF"/><stop offset="1" stop-color="#223C86"/></linearGradient>
+<filter id="sh1" x="-30%" y="-30%" width="170%" height="170%"><feDropShadow dx="8" dy="12" stdDeviation="14" flood-color="#070B18" flood-opacity=".55"/></filter>
+<filter id="sh2" x="-30%" y="-30%" width="170%" height="170%"><feDropShadow dx="4" dy="6" stdDeviation="6" flood-color="#0A1230" flood-opacity=".5"/></filter></defs><rect width="512" height="512" rx="112" fill="url(#tile)"/><rect width="512" height="512" rx="112" fill="url(#sheen)"/><g transform="translate(256,256) scale(1.0) translate(-256,-256)"><g filter="url(#sh1)"><rect x="150" y="82" width="214" height="290" rx="14" fill="url(#paper)"/></g>
+    <rect x="150" y="82" width="214" height="290" rx="14" fill="url(#sheen)"/>
+    <g fill="#5A657B"><rect x="186" y="128" width="112" height="13" rx="6"/></g>
+    <g fill="#B8C1D2"><rect x="186" y="164" width="140" height="10" rx="5"/><rect x="186" y="186" width="118" height="10" rx="5"/></g>
+    <g fill="#5A657B"><rect x="238" y="226" width="54" height="11" rx="5"/></g>
+    <g fill="#B8C1D2"><rect x="206" y="248" width="116" height="10" rx="5"/><rect x="206" y="270" width="92" height="10" rx="5"/></g><g filter="url(#sh2)"><polygon points="96.0,227.3 147.3,214.0 147.3,343.2 96.0,343.2" fill="url(#tapeV)"/><polygon points="96.0,350.8 286.0,350.8 274.6,404.0 96.0,404.0" fill="url(#tapeH)"/></g>
+    <polygon points="96.0,350.8 286.0,350.8 284.1,358.4 96.0,358.4" fill="#FFFFFF" opacity=".35"/></g></svg>

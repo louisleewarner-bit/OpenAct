@@ -1,0 +1,47 @@
+title: harbour_gate
+---
+<<declare $knows_about_key = false>>
+<<declare $knows_boats_lost = false>>
+<<declare $tam_trusts_player = false>>
+// Dawn. Fog sits on the water. MARGOT, the harbour keeper, is mending a net and does not look up. Plays when the player first arrives.
+MARGOT: You've come down the salt road. Nobody does that any more. #line:MARGOT_001
+-> I need to reach the lighthouse.
+    MARGOT: Then you need the key, and the key is with Tam. #line:MARGOT_002
+    <<set $knows_about_key to true>>
+    <<jump net_loft>>
+-> Why is the harbour empty?
+    MARGOT: The boats went out after the light went dark. None came back. #line:MARGOT_003
+    <<set $knows_boats_lost to true>>
+    <<jump harbour_gate>>
+-> Never mind.
+    <<stop>>
+    // BARK MARGOT_004 MARGOT: Mind the wet planks.
+    // BARK MARGOT_005 MARGOT: Fog is thicker than it was.
+    // LORE: The salt road runs along the bar at low water. It is dry for four hours a day, and not one minute more.
+===
+
+title: net_loft
+---
+// A loft of drying nets. TAM, young and out of breath, hides a brass key behind his back.
+TAM: Margot sent you? She always sends someone. They never come back. #line:TAM_001
+-> The boats never came back either. I know. <<if $knows_boats_lost>>
+    TAM: Then you know why I am scared of that light. #line:TAM_002
+    <<set $tam_trusts_player to true>>
+    <<jump lighthouse_door>>
+-> Give me the key.
+    TAM: Take it. Please. Just take it. #line:TAM_003
+    <<jump lighthouse_door>>
+-> I will leave you to it.
+    <<jump harbour_gate>>
+    // BARK TAM_004 TAM: Is somebody there?
+===
+
+title: lighthouse_door
+---
+// The tide is already lapping at the steps. The door is stiff, and the lamp room above is dark.
+<<if $tam_trusts_player>>TAM: I will hold the door. Go on. #line:TAM_005<<endif>>
+-> Climb to the lamp room.
+    <<stop>>
+-> Turn back.
+    <<jump net_loft>>
+===

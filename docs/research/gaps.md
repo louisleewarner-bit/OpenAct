@@ -1,0 +1,14 @@
+# Unmet needs, ranked
+
+Ranked for the audience in D-001: UK stage writers first, screenwriters second. Each need lists its evidence (sources in competitors.md) and a confidence level. "Assumption" means it still needs interviews to confirm.
+
+1. **Stage layouts treated as first-class, with UK and US options.** Most tools are screenplay-first; stage support, where it exists, is a template (Final Draft, WriterDuet's UK template, Scrivener's desktop-only UK and US formats). UK guides disagree on layout, so writers need options rather than one fixed style. Evidence: S6, S15, S17, S27, S28. Confidence: high.
+2. **Free with no caps or watermarks, on any device.** Free tiers cap scripts (WriterDuet 3, Arc Studio 2), watermark exports (Fade In demo, Arc Studio) or need a subscription (Highland Pro, Celtx). The fully free tools are tied to one platform (Beat: Mac; Trelby: Windows and Linux) or aren't editors (Afterwriting). Evidence: S3, S5, S8–S12, S14. Confidence: high.
+3. **Songs and lyrics for musicals.** Scrivener has no lyrics format; Final Draft's musical templates are partly sold separately; the precise option (LaTeX `musical`) is for technical users. Nothing found plans songs (number, singers, dramatic function) as part of the script. Evidence: S15, S18. Confidence: medium.
+4. **Pantomime structure.** No tool found supports front-cloth and full-stage scenes, routines, the songsheet or the walkdown, though published panto scripts follow these conventions closely. Evidence: S19 and the absence of any panto tool in searches. Confidence: medium (absence of evidence; interviews should confirm writers want it).
+5. **Word and A4 output for directors and publishers.** UK publishers' house styles and amateur companies work in Word; writers outside the US need A4. Evidence: S27 (house style), the Word-template substitute. Confidence: medium.
+6. **Files you own, with no lock-in.** Celtx's move from a free desktop app to subscription angered users; Highland Pro limits lapsed subscribers to open, print and export; plain-text Fountain is a selling point for Highland and Beat. Evidence: S9, S10, S12. Confidence: high.
+7. **Private by default, with AI opt-in.** Users ask how to switch AI features off; cloud tools need accounts. Evidence: S29. Confidence: medium.
+8. **Correct screenplay pages for free.** Writers judge tools on the PDF; free routes either watermark it or need Fountain know-how (Afterwriting). Evidence: S3, S8, S14. Confidence: medium.
+9. **Casting and rehearsal helpers for amateur companies:** line counts, who is in which scene, doubling. Evidence: none found online. Confidence: assumption, test in interviews.
+10. **Reading and quick edits on a phone.** Mobile apps exist (Final Draft Go, Fade In mobile, Beat iOS), but none is free across platforms. Evidence: S1, S4, S12. Confidence: assumption (demand unmeasured).

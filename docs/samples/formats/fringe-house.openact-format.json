@@ -1,0 +1,31 @@
+{
+  "kind": "openact-format",
+  "version": 1,
+  "slug": "fringe-house",
+  "name": "Fringe house style",
+  "blurb": "An invented small-theatre layout for testing.",
+  "base": "stage-uk",
+  "paper": "a4",
+  "marginLeft": 1.25,
+  "marginRight": 1.0,
+  "styles": {
+    "scene": {
+      "left": 1.25,
+      "width": 60,
+      "before": 2,
+      "upper": true,
+      "bold": true
+    },
+    "action": {
+      "left": 2.25,
+      "width": 50,
+      "before": 1,
+      "italic": true
+    },
+    "dialogue": {
+      "left": 3.0,
+      "width": 40,
+      "before": 0
+    }
+  }
+}

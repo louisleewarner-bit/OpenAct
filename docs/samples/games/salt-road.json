@@ -1,0 +1,194 @@
+{
+  "format": "openact-game",
+  "version": 1,
+  "title": "Salt Road",
+  "flags": [
+    "knows_about_key",
+    "knows_boats_lost",
+    "tam_trusts_player"
+  ],
+  "start": "harbour_gate",
+  "preamble": [
+    {
+      "type": "beat",
+      "text": "Reach the lighthouse before the tide turns"
+    }
+  ],
+  "nodes": [
+    {
+      "key": "harbour_gate",
+      "name": "Harbour gate",
+      "items": [
+        {
+          "type": "context",
+          "text": "Dawn. Fog sits on the water. MARGOT, the harbour keeper, is mending a net and does not look up. Plays when the player first arrives."
+        },
+        {
+          "type": "line",
+          "id": "MARGOT_001",
+          "speaker": "MARGOT",
+          "delivery": "wary",
+          "text": "You've come down the salt road. Nobody does that any more."
+        },
+        {
+          "type": "choice",
+          "text": "I need to reach the lighthouse."
+        },
+        {
+          "type": "line",
+          "id": "MARGOT_002",
+          "speaker": "MARGOT",
+          "text": "Then you need the key, and the key is with Tam."
+        },
+        {
+          "type": "set",
+          "flag": "knows_about_key"
+        },
+        {
+          "type": "goto",
+          "to": "net_loft"
+        },
+        {
+          "type": "choice",
+          "text": "Why is the harbour empty?"
+        },
+        {
+          "type": "line",
+          "id": "MARGOT_003",
+          "speaker": "MARGOT",
+          "delivery": "quietly",
+          "text": "The boats went out after the light went dark. None came back."
+        },
+        {
+          "type": "set",
+          "flag": "knows_boats_lost"
+        },
+        {
+          "type": "goto",
+          "to": "harbour_gate"
+        },
+        {
+          "type": "choice",
+          "text": "Never mind."
+        },
+        {
+          "type": "goto",
+          "to": "END"
+        },
+        {
+          "type": "bark",
+          "id": "MARGOT_004",
+          "speaker": "MARGOT",
+          "text": "Mind the wet planks."
+        },
+        {
+          "type": "bark",
+          "id": "MARGOT_005",
+          "speaker": "MARGOT",
+          "text": "Fog is thicker than it was."
+        },
+        {
+          "type": "lore",
+          "text": "The salt road runs along the bar at low water. It is dry for four hours a day, and not one minute more."
+        }
+      ]
+    },
+    {
+      "key": "net_loft",
+      "name": "Net loft",
+      "items": [
+        {
+          "type": "context",
+          "text": "A loft of drying nets. TAM, young and out of breath, hides a brass key behind his back."
+        },
+        {
+          "type": "line",
+          "id": "TAM_001",
+          "speaker": "TAM",
+          "delivery": "defensive",
+          "text": "Margot sent you? She always sends someone. They never come back."
+        },
+        {
+          "type": "choice",
+          "text": "The boats never came back either. I know.",
+          "if": "IF knows_boats_lost"
+        },
+        {
+          "type": "line",
+          "id": "TAM_002",
+          "speaker": "TAM",
+          "text": "Then you know why I am scared of that light."
+        },
+        {
+          "type": "set",
+          "flag": "tam_trusts_player"
+        },
+        {
+          "type": "goto",
+          "to": "lighthouse_door"
+        },
+        {
+          "type": "choice",
+          "text": "Give me the key."
+        },
+        {
+          "type": "line",
+          "id": "TAM_003",
+          "speaker": "TAM",
+          "text": "Take it. Please. Just take it."
+        },
+        {
+          "type": "goto",
+          "to": "lighthouse_door"
+        },
+        {
+          "type": "choice",
+          "text": "I will leave you to it."
+        },
+        {
+          "type": "goto",
+          "to": "harbour_gate"
+        },
+        {
+          "type": "bark",
+          "id": "TAM_004",
+          "speaker": "TAM",
+          "text": "Is somebody there?"
+        }
+      ]
+    },
+    {
+      "key": "lighthouse_door",
+      "name": "Lighthouse door",
+      "items": [
+        {
+          "type": "context",
+          "text": "The tide is already lapping at the steps. The door is stiff, and the lamp room above is dark."
+        },
+        {
+          "type": "line",
+          "id": "TAM_005",
+          "speaker": "TAM",
+          "text": "I will hold the door. Go on.",
+          "if": "IF tam_trusts_player"
+        },
+        {
+          "type": "choice",
+          "text": "Climb to the lamp room."
+        },
+        {
+          "type": "goto",
+          "to": "END"
+        },
+        {
+          "type": "choice",
+          "text": "Turn back."
+        },
+        {
+          "type": "goto",
+          "to": "net_loft"
+        }
+      ]
+    }
+  ]
+}

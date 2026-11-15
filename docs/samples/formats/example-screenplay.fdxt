@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<FinalDraft DocumentType="Template" Template="Yes" Version="3">
+  <ElementSettings Type="Scene Heading">
+    <FontSpec Font="Courier Prime" Size="12" Style="AllCaps+Bold"/>
+    <ParagraphSpec Alignment="Left" LeftIndent="1.25" RightIndent="7.25" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+  </ElementSettings>
+  <ElementSettings Type="Action">
+    <FontSpec Font="Courier Prime" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" LeftIndent="1.25" RightIndent="7.25" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+  </ElementSettings>
+  <ElementSettings Type="Character">
+    <FontSpec Font="Courier Prime" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" LeftIndent="3.50" RightIndent="7.00" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+  </ElementSettings>
+  <ElementSettings Type="Parenthetical">
+    <FontSpec Font="Courier Prime" Size="12" Style="Italic"/>
+    <ParagraphSpec Alignment="Left" LeftIndent="3.00" RightIndent="5.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+  </ElementSettings>
+  <ElementSettings Type="Dialogue">
+    <FontSpec Font="Courier Prime" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" LeftIndent="2.50" RightIndent="6.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+  </ElementSettings>
+  <ElementSettings Type="Transition">
+    <FontSpec Font="Courier Prime" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Right" LeftIndent="5.50" RightIndent="7.25" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+  </ElementSettings>
+  <PageLayout FooterMargin="0.50" HeaderMargin="0.50" TopMargin="1.00">
+    <PageSize Height="11.69" Width="8.27"/>
+    <PageMargins Bottom="1.00" Left="1.25" Right="1.00" Top="1.00"/>
+  </PageLayout>
+</FinalDraft>

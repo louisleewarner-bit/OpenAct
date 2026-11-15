@@ -1,0 +1,64 @@
+Title: The Lighthouse Keeper's Daughter
+Credit: Book and lyrics by
+Author: An OpenAct sample script
+Draft date: Workshop draft
+
+> ACT ONE <
+
+.SCENE 1: THE HARBOUR WALL
+
+Gulls, nets and a supply boat that comes once a week. The ISLANDERS mend, haul and gossip.
+
+!SONG 1: SALT AND STONE (COMPANY)
+[[openact: song | singers: COMPANY | function: Opening number: the island, and the people it keeps | staging: Full company on the harbour wall | feel: Work song; stamped rhythm]]
+
+.SCENE 2: THE LAMP ROOM, SKERRY LIGHTHOUSE
+
+Night. The great lens turns slowly overhead. TOMAS trims the wick with a care that has lasted thirty years. MAREN sits on the stair with a letter she keeps folding and unfolding.
+
+TOMAS
+You've read that letter so many times the ink's going grey.
+
+MAREN
+They want me in September. A place at the conservatoire. Fees paid.
+
+TOMAS
+And who keeps the light while you're playing your fiddle in a city?
+
+MAREN
+You've kept it alone before.
+
+TOMAS
+(Quietly)
+That was the worst year of my life.
+
+He goes out onto the gallery. The beam sweeps past him, out over the dark water. MAREN unfolds the letter one more time.
+
+!SONG 2: FURTHER THAN THE LIGHT (MAREN)
+[[openact: song | singers: MAREN | function: "I want" song: Maren's wish to leave the island, and her guilt about it | staging: Maren climbs to the gallery rail; the beam sweeps the audience on each chorus | feel: Folk ballad; solo fiddle building to full band]]
+
+~Every night I count the ships
+~That pass and never stay,
+~Every night I hold the light
+~For someone sailing away.
+~Just once I want to be the one
+~Who goes into the night,
+~And finds out what the dark is hiding
+~Further than the light.
+
+The beam passes. When it comes round again, TOMAS is standing in the doorway. He has heard every word.
+
+TOMAS
+Your mother sang that tune. Not those words. But that tune.
+
+.SCENE 3: THE JETTY, NEXT MORNING
+
+Grey dawn. AGNES ties up the supply boat: crates of tins and a sack of post.
+
+AGNES
+Post for the lighthouse! And something that looks very much like a ticket.
+
+!SONG 2a: FURTHER THAN THE LIGHT (REPRISE) (MAREN, TOMAS)
+[[openact: song | singers: MAREN, TOMAS | function: Placeholder: father and daughter, lyrics to come | staging:  | feel: Stripped back; fiddle and voice | reprise: yes]]
+
+/* openact {"v":1,"profile":"musical","paper":"a4","cast":[{"name":"MAREN","description":"17. The keeper's daughter; a fiddler who has never left the island."},{"name":"TOMAS","description":"Her father, keeper of the Skerry light for thirty years."},{"name":"AGNES","description":"Skipper of the supply boat; an old friend of Maren's mother."}],"dismissed":[]} */

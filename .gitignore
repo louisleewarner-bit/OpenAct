@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.parcel-cache/
+prototype/bundle.html
+# Private fixtures: the owner's scripts and reference PDFs are never published (D-022).
+tests/private/*
+!tests/private/README.md
+
+release/out/
+prototype/artifact/openact-prototype.html
+prototype/artifact/harness.html
+prototype/offline/dist/
+*.tsbuildinfo
