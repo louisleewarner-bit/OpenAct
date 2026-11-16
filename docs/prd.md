@@ -142,6 +142,11 @@ Each requirement ends with acceptance criteria. Format rules come from the scrip
 - A character the font lacks is named before it is lost. A very long speech is never cut.
 - Acceptance: `checks/export-check.cjs`, `export-verify.py`, `export-verify-docx.py` and `export-edge.cjs` pass with no problems.
 
+### Start page
+**R25. A start page** (D-047)
+- Starting, opening and carrying on are on one friendly page: a blank screenplay or a file in one click, every format as a card, and a card to carry on with the script on screen.
+- Acceptance: `checks/start-check.cjs` passes (desktop, narrow, phone, dark; axe clean).
+
 ### Script files
 **R24. Save, open and close scripts** (D-046)
 - A script can be saved to a `.openact` file, opened again, and closed; New, Open and Close ask first only when changes are in no file. The download has double-click installers for Windows, Mac and Linux.

@@ -281,3 +281,11 @@ The owner asked how a script saves and loads, for a clearer way to close, and fo
 - **Tested:** the file features by `checks/files-check.cjs` (desktop and phone, both save paths, guards, bad files, axe). The Linux installer was run, launched and uninstalled in a clean home folder; the Mac installer's logic was run the same way on Linux (its icon step needs `sips` and `iconutil`, so it was not run). **The Windows installer was not run**: no Windows or PowerShell was available. It is short; test it on a real machine before announcing.
 - **Source:** release/installers/, prototype/checks/files-check.cjs.
 
+### D-047 A start page, not a pop-up
+The owner wanted the "Start a script" screen to be a clean, friendly landing page (2026-11-16; plan A, keep the blue, show it every time for now).
+- **What it is:** a full-screen page (a dialog underneath, so focus stays inside and Escape goes back). A headline, "Start a script", with one line saying scripts stay on the device; two big actions, **Start a blank screenplay** (focused first) and **Open a file…**; quiet links for **Find a format…** and **Import a format file…**; a hand-drawn illustration of a script page, a pencil and a strip of stage tape (the logo's mark); a **resume card** for the script on screen (only when it has text) with **Continue writing**; the user's own formats; and every format as a card in its group (Blank, Samples, Film, Television, Theatre, Audio, Games, Comics, Documents), each with a small line drawing.
+- **When it shows:** first run, New, Close, "Start a script" in the menu. Every time for now: the owner will review whether it should be less often.
+- **Look:** the same calm blue and Atkinson type as the app. One light from the top left (the page background brightens toward that corner, cards lift on it, the page in the hero casts a soft shadow to the lower right). Line drawings use round caps and three weights (2.4, 1.5, 1) in ink, with blue on the one part that is the subject. Light and dark both drawn; one memorable thing (the hero), the rest quiet.
+- **Behaviour kept:** the same buttons and groups, so the checks that click through the Start screen still read it; Open a file goes straight to the file chooser (the person has already chosen to leave the current script).
+- **Source:** prototype/src/start.tsx, illustrations.tsx; prototype/checks/start-check.cjs.
+

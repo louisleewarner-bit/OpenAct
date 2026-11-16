@@ -2,9 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { detect, toFdx, toFountain, type Detected } from './cue/interchange';
 import type { ElType, PaperId, SongMeta, TitlePage } from './cue/model';
-import type React from 'react';
-import { exportsFdx, GROUPS, labelOf, PAPERS, PROFILE_ORDER, PROFILES } from './cue/profiles';
-import { makeSample, makeTemplate, type SampleId } from './cue/samples';
+import { exportsFdx, labelOf, PAPERS } from './cue/profiles';
 import { strToU8, zipSync } from 'fflate';
 import { uncoveredChars } from './assets/courier-prime-coverage';
 import { scriptToDocx } from './cue/export-docx';
@@ -17,98 +15,7 @@ import { store } from './state';
 
 type OpenProps = { open: boolean; onOpenChange: (o: boolean) => void };
 
-const SAMPLES: { id: SampleId; title: string; sample: string; desc: string }[] = [
-  { id: 'panto', title: 'Pantomime', sample: 'Jack and the Beanstalk', desc: 'Front cloths, songs, and a "behind you".' },
-  { id: 'musical', title: 'Musical', sample: "The Lighthouse Keeper's Daughter", desc: 'Numbered songs with singers and staging notes.' },
-  { id: 'screenplay', title: 'Screenplay', sample: 'Last Wash', desc: 'A speech that runs over a page, with (MORE) and (CONT\u2019D).' },
-];
-
-export function WelcomeDialog({ open, onOpenChange, onStart, onImport, onFind, yourFormats }: OpenProps & { onStart: () => void; onImport: () => void; onFind: () => void; yourFormats: React.ReactNode }) {
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[760px] max-h-[88vh] overflow-auto">
-        <DialogHeader>
-          <DialogTitle>Start a script</DialogTitle>
-          <DialogDescription>Start blank, open a sample, or pick a format. The new script replaces the one on screen; you can change its format at any time.</DialogDescription>
-        </DialogHeader>
-        <div className="start-tools">
-          <button type="button" className="btn" onClick={onFind}>
-            Find a format…
-          </button>
-          <button type="button" className="btn" onClick={onImport}>
-            Import a format file…
-          </button>
-        </div>
-        {yourFormats}
-        <h3 className="gallery-head">Blank</h3>
-        <div className="choice-grid two">
-          {(
-            [
-              ['blank-screen', 'Blank screenplay', 'An empty page, ready for a scene heading.'],
-              ['blank-stage', 'Blank stage play', 'Act One, Scene 1, in UK layout.'],
-            ] as const
-          ).map(([id, title, desc]) => (
-            <button
-              key={id}
-              type="button"
-              className="choice choice-blank"
-              onClick={() => {
-                store.load(makeSample(id, store.script.paper));
-                onOpenChange(false);
-                onStart();
-              }}
-            >
-              <strong>{title}</strong>
-              <span>{desc}</span>
-            </button>
-          ))}
-        </div>
-        <h3 className="gallery-head">Samples</h3>
-        <div className="choice-grid three">
-          {SAMPLES.map((c) => (
-            <button
-              key={c.id}
-              type="button"
-              className="choice"
-              onClick={() => {
-                store.load(makeSample(c.id, store.script.paper));
-                onOpenChange(false);
-                onStart();
-              }}
-            >
-              <strong>{c.title}</strong>
-              <em>{c.sample}</em>
-              <span>{c.desc}</span>
-            </button>
-          ))}
-        </div>
-        {GROUPS.map((g) => (
-          <section key={g} aria-label={g}>
-            <h3 className="gallery-head">{g}</h3>
-            <div className="choice-grid three">
-              {PROFILE_ORDER.filter((p) => PROFILES[p].group === g).map((p) => (
-                <button
-                  key={p}
-                  type="button"
-                  className="choice"
-                  onClick={() => {
-                    store.load(makeTemplate(p));
-                    onOpenChange(false);
-                    onStart();
-                  }}
-                >
-                  <strong>{PROFILES[p].name}</strong>
-                  <span>{PROFILES[p].blurb}</span>
-                </button>
-              ))}
-            </div>
-          </section>
-        ))}
-        <p className="note-box">OpenAct keeps scripts on your device and never uploads them. This prototype stores your edits in this browser and simulates saving files.</p>
-      </DialogContent>
-    </Dialog>
-  );
-}
+export { WelcomeDialog } from './start';
 
 type Fmt = 'pdf' | 'docx' | 'fountain' | 'fdx' | 'csv' | 'ink' | 'yarn' | 'json';
 const FMTS: { id: Fmt; label: string; ext: string }[] = [

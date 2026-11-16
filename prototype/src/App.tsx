@@ -587,6 +587,7 @@ export default function App() {
         onStart={focusFirst}
         onImport={() => { setWelcome(false); setEditingFormat(null); setImportOpen(true); }}
         onFind={() => { setWelcome(false); setFinderOpen(true); }}
+        onOpenFile={() => { setWelcome(false); window.setTimeout(() => fileInput.current?.click(), 50); }}
         yourFormats={<YourFormats onUse={startWith} onEdit={(d) => { setWelcome(false); setEditingFormat(d); setImportOpen(true); }} onExport={(d) => { setWelcome(false); setFileFormat(d); }} />}
       />
       <ImportFormatDialog

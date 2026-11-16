@@ -191,7 +191,7 @@ shutil.copytree(PKG / 'app', SITE / 'app'); shutil.copy(ZIP, SITE / ZIP.name)
 for f in ('mark.svg', 'logo.svg', 'social-card.png', 'favicon.svg', 'favicon.ico', 'apple-touch-icon.png'): shutil.copy(KIT / 'brand' / f, SITE / 'img' / f)
 for f in ('atkinson-hyperlegible-next-latin-wght-normal.woff2', 'courier-prime-latin-400-normal.woff2', 'courier-prime-latin-700-normal.woff2'): shutil.copy(PROTO / 'offline' / 'fonts' / f, SITE / 'fonts' / f)
 from PIL import Image
-for src, dst, w in (('pack-desktop.jpg', 'desktop.jpg', 1440), ('pack-phone.jpg', 'phone.jpg', 390)):
+for src, dst, w in (('pack-desktop.jpg', 'desktop.jpg', 1440), ('pack-phone.jpg', 'phone.jpg', 390), ('start-desk.png', 'start.jpg', 1440)):
     im = Image.open(SHOTS / src).convert('RGB'); im.thumbnail((w * 2 if w > 400 else w * 2, 4000)); im.save(SITE / 'img' / dst, quality=82, optimize=True)
 fonts_css = '''<style>
 @font-face { font-family: "Atkinson Hyperlegible Next"; font-weight: 200 800; font-display: swap; src: url(fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2) format("woff2-variations"); }
@@ -202,7 +202,7 @@ tpl = (KIT / 'release' / 'landing.html').read_text()
 def fill(t, **kv):
     for k, v in kv.items(): t = t.replace('{{' + k + '}}', v)
     return t
-index = fill(tpl, OG='img/social-card.png', FAVICON='img/favicon.svg', FONTS=fonts_css, OPEN='app/', ZIP=ZIP.name, ZIPSIZE=f'Download: {size}.', IMG_DESKTOP='img/desktop.jpg', IMG_PHONE='img/phone.jpg', PRIVACY='privacy.html')
+index = fill(tpl, OG='img/social-card.png', FAVICON='img/favicon.svg', FONTS=fonts_css, OPEN='app/', ZIP=ZIP.name, ZIPSIZE=f'Download: {size}.', IMG_DESKTOP='img/desktop.jpg', IMG_PHONE='img/phone.jpg', IMG_START='img/start.jpg', PRIVACY='privacy.html')
 (SITE / 'index.html').write_text(index)
 import html
 privacy = (PKG / 'PRIVACY.txt').read_text()

@@ -234,6 +234,7 @@ footer {{ font-size: 13.5px; color: var(--ink-soft); display: grid; gap: 6px; ma
         <div><h3>The margin speaks</h3><p>The current element's name sits in the left margin in pencil, as a stage manager annotates a prompt copy. It teaches the element names without a tutorial.</p></div>
         <div><h3>A real highlighter</h3><p>Pick a character and their lines are highlighted, the way actors mark their scripts.</p></div>
         <div><h3>Bring your own format</h3><p>Import a Final Draft or Word template, check a sample page, and save it as a format. A built-in finder lists common formats and links to each organisation's own page; searching it sends nothing anywhere.</p></div>
+        <div><h3>A friendly start page</h3><p>Starting, opening and carrying on are on one page: a blank screenplay or a file in one click, every format as a card with a small line drawing, and a card to carry on with the script on screen.</p></div>
         <div><h3>Video game scripts</h3><p>Nodes, player choices, conditions, barks and quest beats, with a branch map that checks every jump and recording line IDs you can lock. Exports a recording sheet, Ink and Yarn Spinner files.</p></div>
         <div><h3>Revision-paper colours</h3><p><span class="chip blue">Full stage</span> <span class="chip pink">Front cloth</span> <span class="chip gold">Songs</span> borrow the pale colours of revised script pages, always with a label.</p></div>
       </div>
