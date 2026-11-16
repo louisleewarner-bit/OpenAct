@@ -15,6 +15,14 @@ const Frame = ({ children, size = 56 }: { children: ReactNode; size?: number }) 
   </svg>
 );
 
+/** A regular five-point star (point up), so every edge and angle matches. */
+const star = (cx: number, cy: number, R: number, r: number) =>
+  Array.from({ length: 10 }, (_, i) => {
+    const a = (-90 + i * 36) * (Math.PI / 180);
+    const d = i % 2 ? r : R;
+    return `${i ? 'L' : 'M'}${(cx + d * Math.cos(a)).toFixed(2)} ${(cy + d * Math.sin(a)).toFixed(2)}`;
+  }).join(' ') + ' Z';
+
 const A = 'var(--accent)';
 const TINT = 'var(--tint-blue)';
 
@@ -51,7 +59,7 @@ export function GroupArt({ group, size }: { group: string; size?: number }) {
           <path d="M54 10 C54 28 43 36 44 54 L55 54 Z" strokeWidth={W1} fill={TINT} />
           <path d="M14 14 C14 26 18 34 17 48 M50 14 C50 26 46 34 47 48" strokeWidth={W3} />
           <path d="M24 54 H40" strokeWidth={W2} />
-          <path d="M32 24 L34 29 L39.5 29.6 L35.4 33.2 L36.6 38.6 L32 35.8 L27.4 38.6 L28.6 33.2 L24.5 29.6 L30 29 Z" strokeWidth={W2} fill={A} stroke={A} />
+          <path d={star(32, 31, 8.5, 3.4)} strokeWidth={W2} fill={A} stroke={A} />
         </Frame>
       );
     case 'Audio':
@@ -77,7 +85,7 @@ export function GroupArt({ group, size }: { group: string; size?: number }) {
       return (
         <Frame size={size}>
           <path d="M13 12 H51 A5 5 0 0 1 56 17 V36 A5 5 0 0 1 51 41 H36 L23 53 V41 H13 A5 5 0 0 1 8 36 V17 A5 5 0 0 1 13 12 Z" strokeWidth={W1} fill="var(--paper)" />
-          <path d="M31 17 L33.4 23.2 L40 23.8 L35 28.2 L36.6 34.6 L31 31.2 L25.4 34.6 L27 28.2 L22 23.8 L28.6 23.2 Z" strokeWidth={W2} fill={TINT} />
+          <path d={star(31, 26.5, 10.5, 4.3)} strokeWidth={W2} fill={TINT} />
           <path d="M14 20 H18 M46 31 H50" strokeWidth={W3} />
         </Frame>
       );
@@ -103,8 +111,7 @@ export function GroupArt({ group, size }: { group: string; size?: number }) {
       // Samples
       return (
         <Frame size={size}>
-          <path d="M32 8 L37 24 L54 26 L41 37 L45 54 L32 45 L19 54 L23 37 L10 26 L27 24 Z" strokeWidth={W1} fill={TINT} />
-          <path d="M26 20 L30 14" strokeWidth={W3} />
+          <path d={star(32, 34, 26, 10.6)} strokeWidth={W1} fill={TINT} />
         </Frame>
       );
   }
